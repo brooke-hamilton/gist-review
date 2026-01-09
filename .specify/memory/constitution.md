@@ -1,50 +1,131 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+SYNC IMPACT REPORT
+==================
+Version change: N/A → 1.0.0 (Initial ratification)
+Modified principles: None (initial version)
+Added sections:
+  - Core Principles (5 principles)
+  - Security Requirements
+  - Development Standards
+  - Governance
+Removed sections: None
+Templates requiring updates:
+  - plan-template.md ✅ (no updates required - generic template compatible)
+  - spec-template.md ✅ (no updates required - generic template compatible)
+  - tasks-template.md ✅ (no updates required - generic template compatible)
+Follow-up TODOs: None
+-->
+
+# Gist Review Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Markdown-First
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+All documents under review MUST remain as pure Markdown files stored in GitHub Gists.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+- Document content MUST NOT be modified by the review system
+- Comments and review metadata MUST be stored separately from document content
+- Markdown format ensures optimal LLM consumption and version control compatibility
+- Gist revision history serves as the document version control mechanism
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+**Rationale**: Preserving Markdown as the source of truth enables seamless integration with
+LLM workflows, maintains portability, and leverages GitHub's built-in versioning.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### II. Zero Backend
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+The application MUST operate as a fully static site with no server-side components beyond GitHub's infrastructure.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+- All application logic MUST execute client-side in the browser
+- Data persistence MUST use GitHub APIs exclusively (Gists, Gist Comments)
+- OAuth token exchange MAY use a minimal proxy (Cloudflare Worker, Gatekeeper) or Device Flow
+- No custom databases, servers, or stateful backend services are permitted
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+**Rationale**: Eliminating backend infrastructure reduces operational complexity, hosting costs,
+and security surface area while enabling simple GitHub Pages deployment.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### III. GitHub-Native
+
+All authentication, storage, and collaboration features MUST use GitHub's native capabilities.
+
+- Authentication MUST use GitHub OAuth with minimal scope (`gist` only)
+- Document storage MUST use GitHub Gists API
+- Review comments MUST be stored as Gist comments with embedded metadata
+- User identity MUST be derived from GitHub accounts
+
+**Rationale**: GitHub-native integration ensures familiar identity, eliminates account
+proliferation, and leverages GitHub's reliability and API ecosystem.
+
+### IV. Shareable by Default
+
+Review sessions MUST be accessible via simple, shareable URLs.
+
+- URLs MUST follow the format: `https://{host}/gist-review?gist={gist_id}`
+- Both full Gist URLs and bare Gist IDs MUST be accepted as parameters
+- Public Gists MUST be viewable without authentication
+- Authentication MUST only be required for creating or modifying comments
+
+**Rationale**: Low-friction sharing encourages adoption and enables quick collaboration
+without onboarding overhead.
+
+### V. Contextual Anchoring
+
+Comments MUST be anchored to specific text selections within documents.
+
+- Each comment MUST store: line number, selection start/end offsets, selected text, Gist revision
+- Comment metadata MUST be embedded as front matter in Gist comments
+- Comments are tied to a specific Gist revision to maintain context over time
+- The UI must visually highlight text selections associated with comments
+- The UI must show comments only for the specific revision being displayed
+- The UI must allow users to select different revisions and view associated comments
+
+**Rationale**: Text-anchored comments provide precise feedback context, similar to Word
+or PR reviews, enabling actionable and unambiguous review discussions.
+
+## Security Requirements
+
+All security implementations MUST follow these constraints:
+
+- OAuth tokens MUST be stored in `localStorage` (same-origin protection)
+- OAuth scope MUST be limited to `gist` (no repository, issue, or other access)
+- Markdown rendering MUST sanitize content using DOMPurify or equivalent
+- Content Security Policy headers MUST be configured to prevent XSS
+- External images in Markdown SHOULD be proxied or restricted
+
+**Rationale**: Minimal token scope and client-side sanitization limit blast radius of
+potential security incidents while enabling necessary functionality.
+
+## Development Standards
+
+All code contributions MUST adhere to these standards:
+
+- **Single-Page Application**: Core app is an SPA with no build toolchain requirements
+- **Progressive Enhancement**: Basic document viewing MUST work without JavaScript for SEO
+- **API Rate Awareness**: Application MUST handle GitHub API rate limits gracefully (60/hr
+  unauthenticated, 5000/hr authenticated)
+- **Error Handling**: All API failures MUST display user-friendly messages with recovery options
+- **Accessibility**: UI MUST support keyboard navigation and screen readers
+
+**Rationale**: These standards ensure maintainability, reliability, and inclusive access
+while respecting GitHub API constraints.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution supersedes all other development practices for the Gist Review project.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Amendment Process**:
+
+1. Proposed changes MUST be documented with rationale
+2. Changes to Core Principles require explicit justification of trade-offs
+3. Version increments follow semantic versioning:
+   - MAJOR: Principle removal or incompatible redefinition
+   - MINOR: New principle or section added
+   - PATCH: Clarifications and wording refinements
+
+**Compliance**:
+
+- All pull requests MUST verify alignment with Core Principles
+- Deviations MUST be explicitly justified in PR descriptions
+- Periodic reviews SHOULD assess principle effectiveness
+
+**Version**: 1.0.0 | **Ratified**: 2026-01-09 | **Last Amended**: 2026-01-09
