@@ -62,3 +62,7 @@ specs/3-fetch-public-gist/
 ## Complexity Tracking
 
 > No violations. This feature aligns fully with the constitution.
+
+## Cross-Feature Notes
+
+> **Rate Limit Handling**: This feature implements basic rate limit error detection and user messaging (displaying reset time when a 403 rate limit error occurs). Comprehensive rate limit UI—including a persistent header indicator showing remaining/total requests, low-limit warnings, and proactive authentication suggestions—is covered in **Spec 13: Rate Limit Handling**.

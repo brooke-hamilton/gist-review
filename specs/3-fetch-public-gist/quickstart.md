@@ -27,7 +27,7 @@
 ## Test Gist IDs
 
 ```
-# Valid public Gist (use any real public gist ID)
+# Valid public Gist (use any real public Gist ID)
 ?gist=aa5a315d61ae9438b18d
 
 # Invalid/non-existent Gist
