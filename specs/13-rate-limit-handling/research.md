@@ -10,12 +10,14 @@
 **Decision**: Parse standard GitHub rate limit headers from all API responses.
 
 **Headers**:
+
 - `X-RateLimit-Limit`: Total requests allowed per hour
 - `X-RateLimit-Remaining`: Requests remaining
 - `X-RateLimit-Reset`: Unix timestamp when limit resets
 - `X-RateLimit-Used`: Requests used in current window
 
 **Implementation**:
+
 ```javascript
 function parseRateLimitHeaders(response) {
   return {
@@ -32,6 +34,7 @@ function parseRateLimitHeaders(response) {
 **Decision**: Show as fraction "45/60" in header indicator.
 
 **HTML**:
+
 ```html
 <div class="rate-limit-indicator">
   <span class="rate-remaining">45</span>/<span class="rate-limit">60</span>
@@ -43,6 +46,7 @@ function parseRateLimitHeaders(response) {
 **Decision**: Calculate time remaining and format as "X minutes" or "X hours Y minutes".
 
 **Implementation**:
+
 ```javascript
 function formatResetTime(resetTimestamp) {
   const now = Math.floor(Date.now() / 1000);
@@ -63,6 +67,7 @@ function formatResetTime(resetTimestamp) {
 **Decision**: Add warning class when remaining < 10.
 
 **CSS**:
+
 ```css
 .rate-limit-indicator.warning {
   color: var(--warning-color);
@@ -80,6 +85,7 @@ function formatResetTime(resetTimestamp) {
 **Decision**: Detect 403 with rate limit message and show friendly error.
 
 **Implementation**:
+
 ```javascript
 async function handleApiResponse(response) {
   updateRateLimitDisplay(parseRateLimitHeaders(response));
@@ -100,6 +106,7 @@ async function handleApiResponse(response) {
 **Decision**: Show login link in error message for unauthenticated users.
 
 **Message Template**:
+
 ```
 You've exceeded the API rate limit. Resets in {time}.
 [Log in with GitHub] to increase your limit from 60 to 5,000 requests per hour.

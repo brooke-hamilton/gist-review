@@ -11,6 +11,7 @@
 ## Implementation Steps
 
 1. **Add thread panel CSS**:
+
    ```css
    .thread-panel {
      position: absolute;

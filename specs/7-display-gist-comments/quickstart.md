@@ -11,11 +11,13 @@
 ## Implementation Steps
 
 1. **Add js-yaml to index.html**:
+
    ```html
    <script src="https://cdn.jsdelivr.net/npm/js-yaml/dist/js-yaml.min.js"></script>
    ```
 
 2. **Add sidebar HTML structure**:
+
    ```html
    <div class="layout">
      <main class="content-area">
@@ -62,6 +64,7 @@
 2. Add comments manually on GitHub:
    - Plain comment (no front matter)
    - Comment with YAML front matter:
+
      ```
      ---
      line_start: 5

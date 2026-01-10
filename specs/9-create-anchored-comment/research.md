@@ -9,12 +9,14 @@
 
 **Decision**: Use `POST /gists/{gist_id}/comments` endpoint.
 
-**Rationale**: 
+**Rationale**:
+
 - Official GitHub API for creating Gist comments
 - Requires authentication
 - Returns created comment for immediate display
 
 **Request Body**:
+
 ```json
 {
   "body": "---\nline_start: 5\n...\n---\n\nComment text here"
@@ -26,11 +28,13 @@
 **Decision**: Use js-yaml's `dump()` function with appropriate options.
 
 **Rationale**:
+
 - Ensures valid YAML output
 - Handles special characters properly
 - Consistent with parsing in Spec 7
 
 **Configuration**:
+
 ```javascript
 jsyaml.dump(metadata, {
   lineWidth: -1,  // Don't wrap long lines
@@ -44,6 +48,7 @@ jsyaml.dump(metadata, {
 **Decision**: Use flat structure with specified keys per spec clarification.
 
 **Schema**:
+
 ```yaml
 ---
 line_start: 5
@@ -61,11 +66,13 @@ file: readme.md
 **Decision**: Expand selection popover to include text input and submit button.
 
 **Rationale**:
+
 - Keeps interaction contextual
 - Required by spec FR-001a
 - Natural flow from selection to commenting
 
 **UI Elements**:
+
 - Textarea for comment text
 - Preview/Edit toggle tabs
 - Submit button
@@ -76,6 +83,7 @@ file: readme.md
 **Decision**: Add preview tab that renders comment as Markdown.
 
 **Rationale**:
+
 - Required by spec FR-001b
 - Reuses existing Markdown renderer
 - Users can verify formatting before submission
@@ -85,6 +93,7 @@ file: readme.md
 **Decision**: Store draft in sessionStorage during authentication flow.
 
 **Rationale**:
+
 - Required by spec FR-011a, FR-011b
 - sessionStorage clears on tab close (appropriate for drafts)
 - Survives OAuth redirect
@@ -92,6 +101,7 @@ file: readme.md
 **Storage Key**: `gist_review_comment_draft`
 
 **Structure**:
+
 ```javascript
 {
   gistId: 'abc123',
@@ -105,6 +115,7 @@ file: readme.md
 **Decision**: Require non-empty comment text before submission.
 
 **Rationale**:
+
 - Required by spec FR-012
 - Show inline validation error
 - Disable submit button when empty

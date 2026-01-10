@@ -12,6 +12,7 @@
 ## Implementation Steps
 
 1. **Create GitHub Actions workflow**:
+
    ```yaml
    # .github/workflows/deploy.yml
    name: Deploy to GitHub Pages
@@ -66,6 +67,7 @@
    ```
 
 2. **Create 404.html**:
+
    ```html
    <!DOCTYPE html>
    <html lang="en">
@@ -94,6 +96,7 @@
    - Save
 
 4. **Add status badge to README**:
+
    ```markdown
    # Gist Review
    
@@ -101,6 +104,7 @@
    ```
 
 5. **Add deployment documentation to README**:
+
    ```markdown
    ## Deployment
    

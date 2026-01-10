@@ -10,6 +10,7 @@
 **Decision**: Use official `actions/deploy-pages` action.
 
 **Workflow**:
+
 ```yaml
 name: Deploy to GitHub Pages
 
@@ -63,6 +64,7 @@ jobs:
 **Decision**: Create redirect page that preserves query parameters.
 
 **HTML**:
+
 ```html
 <!DOCTYPE html>
 <html>
@@ -88,6 +90,7 @@ jobs:
 **Decision**: Enable GitHub Pages via Actions in repository settings.
 
 **Steps**:
+
 1. Go to Settings → Pages
 2. Select "GitHub Actions" as source
 3. Workflow will auto-deploy
@@ -97,6 +100,7 @@ jobs:
 **Decision**: Add GitHub Actions badge to README.
 
 **Markdown**:
+
 ```markdown
 ![Deploy to GitHub Pages](https://github.com/username/gist-review/actions/workflows/deploy.yml/badge.svg)
 ```
@@ -106,6 +110,7 @@ jobs:
 **Decision**: Add deployment section to README.
 
 **Content**:
+
 - Deployment process overview
 - How to trigger deployment
 - How to verify deployment
@@ -116,6 +121,7 @@ jobs:
 **Decision**: Include simple copy step that can be expanded.
 
 **Rationale**:
+
 - Currently no build needed (vanilla JS)
 - Placeholder for future bundler/minifier
 - Easy to extend workflow

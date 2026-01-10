@@ -11,6 +11,7 @@
 ## Implementation Steps
 
 1. **Add highlight CSS**:
+
    ```css
    /* Modern browsers */
    ::highlight(comment-anchor) {

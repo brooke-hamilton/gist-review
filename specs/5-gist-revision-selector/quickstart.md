@@ -11,6 +11,7 @@
 ## Implementation Steps
 
 1. **Add revision selector HTML** to index.html:
+
    ```html
    <div class="revision-selector">
      <label for="revision-select">Revision:</label>

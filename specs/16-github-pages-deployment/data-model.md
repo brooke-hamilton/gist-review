@@ -43,6 +43,7 @@ SPA redirect handler that sends requests to index.html.
 ### README.md Updates
 
 Sections to add:
+
 - Deployment badge at top
 - Deployment section with:
   - Overview
@@ -55,6 +56,7 @@ Sections to add:
 ### GitHub Repository Settings
 
 Navigate to Settings → Pages:
+
 - **Source**: GitHub Actions
 - **Custom domain**: (optional)
 - **Enforce HTTPS**: ✅ Enabled
@@ -62,6 +64,7 @@ Navigate to Settings → Pages:
 ### Required Permissions
 
 Workflow requires:
+
 - `contents: read`
 - `pages: write`
 - `id-token: write`
@@ -74,6 +77,7 @@ Workflow requires:
 ## No JavaScript Functions Needed
 
 This feature is entirely infrastructure configuration:
+
 - GitHub Actions workflow (YAML)
 - 404 redirect page (HTML + minimal JS)
 - README documentation (Markdown)

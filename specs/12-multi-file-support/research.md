@@ -10,6 +10,7 @@
 **Decision**: Use GitHub Gist API `files` object which contains filename-keyed file data.
 
 **API Response Structure**:
+
 ```json
 {
   "files": {
@@ -37,6 +38,7 @@
 **Decision**: Horizontal scrollable tab bar using native HTML/CSS.
 
 **HTML Structure**:
+
 ```html
 <nav class="file-tabs" role="tablist">
   <button role="tab" aria-selected="true" data-file="readme.md">
@@ -49,6 +51,7 @@
 ```
 
 **CSS**:
+
 ```css
 .file-tabs {
   display: flex;
@@ -76,6 +79,7 @@
 **Decision**: Use `?file=` parameter with URL-encoded filename.
 
 **Implementation**:
+
 ```javascript
 function updateFileInUrl(filename) {
   const url = new URL(window.location);
@@ -104,6 +108,7 @@ const sortedFiles = Object.keys(gist.files).sort((a, b) =>
 **Decision**: Detect by file extension or language field, render as syntax-highlighted code block.
 
 **Implementation**:
+
 ```javascript
 function renderFile(file) {
   if (isMarkdown(file.filename)) {

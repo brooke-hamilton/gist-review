@@ -10,6 +10,7 @@
 **Decision**: Include standard Open Graph meta tags.
 
 **Required Tags**:
+
 ```html
 <meta property="og:title" content="Gist Review">
 <meta property="og:description" content="Review and comment on GitHub Gists with anchored feedback">
@@ -25,6 +26,7 @@
 **Decision**: Use summary card type.
 
 **Tags**:
+
 ```html
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Gist Review">
@@ -37,6 +39,7 @@
 **Decision**: Include standard SEO meta tags.
 
 **Tags**:
+
 ```html
 <meta name="description" content="Review and comment on GitHub Gists with anchored feedback. A static web app for collaborative Markdown review.">
 <meta name="keywords" content="gist, github, review, comments, markdown, code review">
@@ -49,6 +52,7 @@
 **Decision**: Provide full fallback with logo, features, and GitHub link.
 
 **HTML**:
+
 ```html
 <noscript>
   <div class="noscript-fallback">
@@ -73,6 +77,7 @@
 **Decision**: Use HTML5 semantic elements.
 
 **Structure**:
+
 ```html
 <body>
   <header role="banner">
@@ -92,6 +97,7 @@
 **Decision**: Create 1200x630px branded image.
 
 **Requirements**:
+
 - Size: 1200x630 pixels (Facebook/LinkedIn recommended)
 - Format: PNG or JPG
 - Content: App logo, name "Gist Review", brief tagline
@@ -102,6 +108,7 @@
 **Decision**: Ensure content readable if CSS fails.
 
 **Approach**:
+
 - Use semantic HTML that flows naturally
 - Avoid layout entirely dependent on CSS
 - Test with CSS disabled

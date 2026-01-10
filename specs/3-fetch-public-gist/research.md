@@ -9,13 +9,15 @@
 
 **Decision**: Use `GET https://api.github.com/gists/{gist_id}` endpoint.
 
-**Rationale**: 
+**Rationale**:
+
 - Official GitHub REST API endpoint
 - Returns Gist metadata and file contents
 - Works without authentication for public Gists
 - Rate limited to 60 requests/hour for unauthenticated users
 
 **API Response Structure**:
+
 ```json
 {
   "id": "gist_id",
@@ -37,11 +39,13 @@
 **Decision**: Sort file keys alphabetically and select the first one.
 
 **Rationale**:
+
 - GitHub's default ordering is alphabetical
 - Consistent, predictable behavior
 - Simple to implement with `Object.keys().sort()[0]`
 
 **Alternatives Considered**:
+
 - First key from object iteration - Rejected: Object key order not guaranteed in older specs
 - By file size - Rejected: No clear benefit, adds complexity
 
@@ -58,6 +62,7 @@
 | Timeout | Timeout | "Request timed out. Please try again." |
 
 **Rationale**:
+
 - Different errors require different user actions
 - Specific messages help users understand and recover
 - Rate limit messages include reset time for planning
@@ -67,11 +72,13 @@
 **Decision**: Use `AbortController` with 10-second timeout.
 
 **Rationale**:
+
 - Native browser API, no dependencies
 - Clean cancellation of fetch requests
 - 10 seconds per spec requirement
 
 **Implementation**:
+
 ```javascript
 const controller = new AbortController();
 const timeoutId = setTimeout(() => controller.abort(), 10000);
@@ -83,11 +90,13 @@ fetch(url, { signal: controller.signal });
 **Decision**: Check `X-RateLimit-Remaining` and `X-RateLimit-Reset` headers from API responses.
 
 **Rationale**:
+
 - GitHub includes these headers on all API responses
 - Enables proactive rate limit display
 - Reset time can be calculated for user display
 
 **Headers**:
+
 - `X-RateLimit-Limit`: Maximum requests per hour
 - `X-RateLimit-Remaining`: Remaining requests
 - `X-RateLimit-Reset`: Unix timestamp when limit resets
@@ -97,6 +106,7 @@ fetch(url, { signal: controller.signal });
 **Decision**: Display a loading indicator in the main content area while fetching.
 
 **Rationale**:
+
 - Provides immediate visual feedback
 - Improves perceived performance
 - Required by FR-003

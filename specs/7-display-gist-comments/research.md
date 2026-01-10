@@ -9,13 +9,15 @@
 
 **Decision**: Use `GET /gists/{gist_id}/comments` endpoint.
 
-**Rationale**: 
+**Rationale**:
+
 - Official GitHub API for Gist comments
 - Returns all comments with author and timestamp
 - Works without authentication for public Gists
 - Paginated (30 per page by default)
 
 **API Response**:
+
 ```json
 [
   {
@@ -36,12 +38,14 @@
 **Decision**: Use triple-dash delimiters (`---`) for front matter, parse as YAML first, fall back to JSON.
 
 **Rationale**:
+
 - Triple-dash is YAML standard for document markers
 - Required by spec clarifications
 - YAML is more human-readable than JSON
 - JSON fallback for flexibility
 
 **Parsing Logic**:
+
 ```javascript
 function parseFrontMatter(body) {
   const frontMatterRegex = /^---\n([\s\S]*?)\n---\n?([\s\S]*)$/;
@@ -68,11 +72,13 @@ function parseFrontMatter(body) {
 **Decision**: Use js-yaml library via CDN.
 
 **Rationale**:
+
 - Lightweight, well-maintained
 - Full YAML 1.1/1.2 support
 - No build step required
 
 **CDN**:
+
 ```html
 <script src="https://cdn.jsdelivr.net/npm/js-yaml/dist/js-yaml.min.js"></script>
 ```
@@ -82,11 +88,13 @@ function parseFrontMatter(body) {
 **Decision**: Right sidebar (20-30% width) with content on left (70-80%).
 
 **Rationale**:
+
 - Right placement is conventional for comments/annotations
 - Content remains primary focus
 - Required by spec clarifications
 
 **CSS Layout**:
+
 ```css
 .layout {
   display: flex;
@@ -106,6 +114,7 @@ function parseFrontMatter(body) {
 **Decision**: Group by anchor position (line number), then chronological within groups. Unanchored comments appear last.
 
 **Rationale**:
+
 - Follows document flow for anchored comments
 - Required by spec FR-003a, FR-003b
 - Chronological within group shows conversation order
@@ -115,6 +124,7 @@ function parseFrontMatter(body) {
 **Decision**: Toggle button in sidebar header to collapse/expand.
 
 **Rationale**:
+
 - Required by spec FR-002a
 - Maximizes content area when needed
 - Default to expanded (FR-002b)

@@ -11,6 +11,7 @@
 ## Implementation Steps
 
 1. **Add rate limit indicator HTML**:
+
    ```html
    <div class="rate-limit-indicator" aria-live="polite">
      <span class="rate-remaining">--</span>/<span class="rate-limit">--</span>
@@ -19,6 +20,7 @@
    ```
 
 2. **Add rate limit CSS**:
+
    ```css
    .rate-limit-indicator {
      font-size: 0.75rem;
@@ -102,6 +104,7 @@
 ### Testing Approach
 
 Since exhausting rate limits is impractical:
+
 1. Mock API responses with low limit headers
 2. Manually test warning at real low counts
 3. Verify countdown math with known timestamps

@@ -9,12 +9,14 @@
 
 **Decision**: Use native `URLSearchParams` API for query parameter extraction.
 
-**Rationale**: 
+**Rationale**:
+
 - Native browser API, no dependencies needed
 - Handles URL decoding automatically
 - Well-supported in all modern browsers
 
 **Alternatives Considered**:
+
 - Manual regex parsing - Rejected: More error-prone, URLSearchParams is standard
 - Third-party routing library - Rejected: Overkill for simple parameter extraction
 
@@ -23,11 +25,13 @@
 **Decision**: Extract Gist ID from full URLs by taking the last path segment after stripping trailing slashes and fragments.
 
 **Rationale**:
+
 - GitHub Gist URLs follow pattern: `https://gist.github.com/{username}/{gist_id}`
 - The Gist ID is always the last path segment
 - This approach works for both public GitHub and Enterprise instances
 
 **Pattern Matching**:
+
 ```javascript
 // Full URL: extract last path segment
 // https://gist.github.com/user/abc123 → abc123
@@ -36,6 +40,7 @@
 ```
 
 **Alternatives Considered**:
+
 - Regex for specific domain - Rejected: Breaks for Enterprise instances
 - URL constructor with domain validation - Rejected: Unnecessary complexity
 
@@ -44,11 +49,13 @@
 **Decision**: If the value doesn't start with `http://` or `https://`, treat it as a bare Gist ID.
 
 **Rationale**:
+
 - Simple heuristic that covers all cases
 - GitHub Gist IDs are alphanumeric (hex format)
 - No need to validate format; let GitHub API reject invalid IDs later
 
 **Alternatives Considered**:
+
 - Validate hex format - Rejected: GitHub might change ID format; let API validate
 - Validate length - Rejected: IDs vary in length
 
@@ -57,6 +64,7 @@
 **Decision**: Use `URLSearchParams.get()` which returns only the first value for duplicate keys.
 
 **Rationale**:
+
 - Matches FR-008 requirement
 - Native behavior of URLSearchParams
 - Predictable, spec-compliant
@@ -66,6 +74,7 @@
 **Decision**: Display as labeled format: "Gist ID: {id}" in the main content area.
 
 **Rationale**:
+
 - Clear and unambiguous
 - Required by FR-004 in spec
 - Simple to implement

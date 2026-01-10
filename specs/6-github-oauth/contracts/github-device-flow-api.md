@@ -45,6 +45,7 @@ client_id={CLIENT_ID}&scope=gist
 ## Step 2: User Authorization
 
 Direct user to `verification_uri` where they:
+
 1. Log in to GitHub (if not already)
 2. Enter the `user_code`
 3. Authorize the application
@@ -69,6 +70,7 @@ client_id={CLIENT_ID}&device_code={DEVICE_CODE}&grant_type=urn:ietf:params:oauth
   "error_description": "The authorization request is still pending."
 }
 ```
+
 **Action**: Continue polling at specified interval.
 
 ### Response: Slow Down
@@ -80,6 +82,7 @@ client_id={CLIENT_ID}&device_code={DEVICE_CODE}&grant_type=urn:ietf:params:oauth
   "interval": 10
 }
 ```
+
 **Action**: Increase polling interval by 5 seconds.
 
 ### Response: Expired Token
@@ -90,6 +93,7 @@ client_id={CLIENT_ID}&device_code={DEVICE_CODE}&grant_type=urn:ietf:params:oauth
   "error_description": "The device_code has expired."
 }
 ```
+
 **Action**: Restart flow from Step 1.
 
 ### Response: Access Denied
@@ -100,6 +104,7 @@ client_id={CLIENT_ID}&device_code={DEVICE_CODE}&grant_type=urn:ietf:params:oauth
   "error_description": "The user has denied the authorization request."
 }
 ```
+
 **Action**: Show error to user, allow retry.
 
 ### Response: Success

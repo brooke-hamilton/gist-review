@@ -12,6 +12,7 @@
 ## Implementation Steps
 
 1. **Add focus indicator CSS**:
+
    ```css
    :focus-visible {
      outline: 2px solid #005fcc;
@@ -38,6 +39,7 @@
    ```
 
 2. **Add skip link**:
+
    ```html
    <a href="#main-content" class="skip-link">Skip to content</a>
    <!-- ... -->
@@ -45,6 +47,7 @@
    ```
 
 3. **Add ARIA live regions**:
+
    ```html
    <div id="status-region" aria-live="polite" aria-atomic="true" class="sr-only"></div>
    <div id="error-region" aria-live="assertive" aria-atomic="true" class="sr-only"></div>

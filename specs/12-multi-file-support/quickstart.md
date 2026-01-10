@@ -11,6 +11,7 @@
 ## Implementation Steps
 
 1. **Add file tab bar CSS**:
+
    ```css
    .file-tabs {
      display: flex;
@@ -49,6 +50,7 @@
    ```
 
 2. **Add tab bar HTML**:
+
    ```html
    <nav class="file-tabs hidden" role="tablist" aria-label="Gist files">
    </nav>

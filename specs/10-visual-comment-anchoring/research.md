@@ -10,6 +10,7 @@
 **Decision**: Use CSS `::highlight` pseudo-element with Custom Highlights API, with fallback to `<mark>` wrapper elements.
 
 **Primary Approach (Modern Browsers)**:
+
 ```javascript
 const highlight = new Highlight();
 CSS.highlights.set('comment-anchor', highlight);
@@ -19,6 +20,7 @@ highlight.add(range);
 ```
 
 **Fallback (Older Browsers)**:
+
 ```javascript
 // Wrap text in <mark> elements
 const mark = document.createElement('mark');
@@ -27,6 +29,7 @@ range.surroundContents(mark);
 ```
 
 **Rationale**:
+
 - Custom Highlights API is non-destructive (doesn't modify DOM)
 - Falls back gracefully to mark elements
 - Both can be styled via CSS
@@ -36,6 +39,7 @@ range.surroundContents(mark);
 **Decision**: Semi-transparent yellow/amber background with hover effect.
 
 **CSS**:
+
 ```css
 ::highlight(comment-anchor) {
   background-color: rgba(255, 213, 79, 0.4);
@@ -57,6 +61,7 @@ range.surroundContents(mark);
 **Decision**: Use line numbers and character offsets from comment metadata to find DOM positions.
 
 **Process**:
+
 1. Find element with matching `data-line` attribute
 2. Walk text nodes to find character offset
 3. Create Range spanning the selection
@@ -67,6 +72,7 @@ range.surroundContents(mark);
 **Decision**: Filter comments by `revision` field in metadata before rendering highlights.
 
 **Rationale**:
+
 - Only show highlights for current revision
 - Required by spec FR-003
 - Prevents confusion from outdated anchors
@@ -76,6 +82,7 @@ range.surroundContents(mark);
 **Decision**: Use event delegation on content area, check if click target is within highlight.
 
 **Implementation**:
+
 ```javascript
 contentArea.addEventListener('click', (e) => {
   const highlight = e.target.closest('.comment-highlight');
@@ -95,6 +102,7 @@ contentArea.addEventListener('click', (e) => {
 **Decision**: For overlapping anchors, show popup menu listing all comments when clicked.
 
 **Rationale**:
+
 - Required by spec FR-007
 - Users can choose which comment to focus
 - Avoids confusing merged highlights
@@ -104,6 +112,7 @@ contentArea.addEventListener('click', (e) => {
 **Decision**: Display orphaned comments in sidebar with warning icon and muted style.
 
 **Rationale**:
+
 - Anchor text may no longer exist in new revisions
 - Users should still see the comment
 - Visual indicator explains why no highlight exists

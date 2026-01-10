@@ -16,6 +16,7 @@
    - Track current line during parsing
 
 2. **Add selection popover HTML**:
+
    ```html
    <div class="selection-popover" id="selection-popover" hidden>
      <div class="selection-info">
@@ -28,6 +29,7 @@
    ```
 
 3. **Add popover CSS**:
+
    ```css
    .selection-popover {
      position: fixed;

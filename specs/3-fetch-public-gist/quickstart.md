@@ -40,12 +40,14 @@
 ## Testing Scenarios
 
 ### Happy Path
+
 1. Navigate to `?gist={valid_id}`
 2. Verify loading indicator appears
 3. Verify content displays within 3 seconds
 4. Verify raw Markdown is visible
 
 ### Error Cases
+
 1. **404 Error**: Use non-existent Gist ID
 2. **Network Error**: Use browser DevTools to go offline
 3. **Timeout**: Use DevTools to throttle to slow 3G

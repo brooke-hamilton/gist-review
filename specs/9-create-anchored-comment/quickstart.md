@@ -12,6 +12,7 @@
 ## Implementation Steps
 
 1. **Extend selection popover** with comment form:
+
    ```html
    <div class="selection-popover" id="selection-popover">
      <div class="selection-info">...</div>
@@ -45,6 +46,7 @@
    - Validate non-empty before submit
 
 3. **Build comment with front matter**:
+
    ```javascript
    function buildCommentBody(selection, revision, file, text) {
      const frontMatter = jsyaml.dump({

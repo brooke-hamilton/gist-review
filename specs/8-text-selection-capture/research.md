@@ -9,12 +9,14 @@
 
 **Decision**: Use native `window.getSelection()` API for text selection tracking.
 
-**Rationale**: 
+**Rationale**:
+
 - Standard browser API
 - Provides Range objects for precise positioning
 - Works across all modern browsers
 
 **Key Methods**:
+
 ```javascript
 const selection = window.getSelection();
 const text = selection.toString();
@@ -27,11 +29,13 @@ const rect = range.getBoundingClientRect();
 **Decision**: Listen for `selectionchange` event on document, debounced.
 
 **Rationale**:
+
 - Fires on any selection change
 - Works for mouse and keyboard selection
 - Debouncing prevents excessive processing
 
 **Implementation**:
+
 ```javascript
 document.addEventListener('selectionchange', debounce(() => {
   const selection = window.getSelection();
@@ -44,11 +48,13 @@ document.addEventListener('selectionchange', debounce(() => {
 **Decision**: Add `data-line` attributes to rendered HTML elements during Markdown parsing.
 
 **Rationale**:
+
 - Creates explicit mapping from DOM to source
 - Can traverse up DOM tree to find nearest line marker
 - Custom marked.js renderer can add attributes
 
 **Implementation**:
+
 ```javascript
 // During Markdown rendering
 renderer.paragraph = function(text) {
@@ -67,11 +73,13 @@ function getLineNumber(node) {
 **Decision**: Calculate offsets relative to text content of the containing line element.
 
 **Rationale**:
+
 - Offsets should be meaningful for anchor recreation
 - Line-relative offsets are simpler than document-relative
 - Works with multi-element lines (bold, italic, etc.)
 
 **Challenges**:
+
 - Selections crossing element boundaries
 - Hidden elements (e.g., collapsed whitespace)
 
@@ -80,11 +88,13 @@ function getLineNumber(node) {
 **Decision**: Position popover above selected text using `getBoundingClientRect()`.
 
 **Rationale**:
+
 - Appears near the selection for context
 - Doesn't obscure selected text
 - Native positioning without library
 
 **CSS**:
+
 ```css
 .selection-popover {
   position: fixed;
@@ -98,6 +108,7 @@ function getLineNumber(node) {
 **Decision**: Require minimum 3 characters and ignore whitespace-only selections.
 
 **Rationale**:
+
 - Prevents accidental single-character triggers
 - Whitespace selections have no meaningful context
 - Required by spec FR-001a, FR-001b

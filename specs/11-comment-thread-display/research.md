@@ -10,6 +10,7 @@
 **Decision**: Group comments by overlapping anchor ranges using interval intersection.
 
 **Algorithm**:
+
 ```javascript
 function groupCommentsIntoThreads(comments) {
   // Sort by line start
@@ -41,6 +42,7 @@ function rangesOverlap(a, b) {
 **Decision**: Use Intl.RelativeTimeFormat for relative timestamps.
 
 **Implementation**:
+
 ```javascript
 function formatRelativeTime(date) {
   const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
@@ -65,6 +67,7 @@ function formatRelativeTime(date) {
 **Decision**: Overlay panel within sidebar that expands to show thread.
 
 **Layout**:
+
 ```html
 <div class="thread-panel">
   <button class="close-thread">&times;</button>
@@ -83,6 +86,7 @@ function formatRelativeTime(date) {
 **Decision**: Support both click-outside and explicit close button.
 
 **Implementation**:
+
 ```javascript
 document.addEventListener('click', (e) => {
   const panel = document.querySelector('.thread-panel');
@@ -98,6 +102,7 @@ document.addEventListener('click', (e) => {
 **Decision**: Use CSS overflow-y scroll with max-height.
 
 **CSS**:
+
 ```css
 .thread-comments {
   max-height: 60vh;

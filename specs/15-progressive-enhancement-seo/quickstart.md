@@ -12,6 +12,7 @@
 ## Implementation Steps
 
 1. **Add meta tags to head**:
+
    ```html
    <head>
      <!-- Existing meta tags -->
@@ -38,6 +39,7 @@
    ```
 
 2. **Add noscript fallback**:
+
    ```html
    <noscript>
      <div class="noscript-fallback">
@@ -64,6 +66,7 @@
    ```
 
 3. **Add noscript CSS**:
+
    ```css
    .noscript-fallback {
      max-width: 600px;
@@ -117,15 +120,15 @@
 ### Social Preview Testing
 
 1. **Facebook Debugger**:
-   - https://developers.facebook.com/tools/debug/
+   - <https://developers.facebook.com/tools/debug/>
    - Enter URL, verify preview
 
 2. **Twitter Card Validator**:
-   - https://cards-dev.twitter.com/validator
+   - <https://cards-dev.twitter.com/validator>
    - Enter URL, verify card
 
 3. **LinkedIn Post Inspector**:
-   - https://www.linkedin.com/post-inspector/
+   - <https://www.linkedin.com/post-inspector/>
    - Enter URL, verify preview
 
 ### Lighthouse SEO Audit

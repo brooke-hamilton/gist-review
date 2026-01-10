@@ -23,6 +23,7 @@
 ## Implementation Steps
 
 1. **Add login/logout UI to header**:
+
    ```html
    <div class="auth-container">
      <!-- When logged out -->
@@ -71,6 +72,7 @@ const CONFIG = {
 ## Testing
 
 ### Happy Path
+
 1. Click "Sign in with GitHub"
 2. Modal appears with code (e.g., "ABCD-1234")
 3. Click link to github.com/login/device
@@ -80,11 +82,13 @@ const CONFIG = {
 7. Refresh page - still logged in
 
 ### Error Cases
+
 1. **User cancels**: Close modal before completing
 2. **Code expires**: Wait 15 minutes without completing
 3. **Token revoked**: Revoke token in GitHub settings, then use app
 
 ### Localhost Development
+
 Device Flow works from localhost without special configuration.
 
 ## Success Criteria Checklist

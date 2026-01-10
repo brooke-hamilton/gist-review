@@ -11,6 +11,7 @@
 ## Implementation Steps
 
 1. **Add CDN links to index.html**:
+
    ```html
    <!-- In <head> -->
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js/styles/github.min.css">

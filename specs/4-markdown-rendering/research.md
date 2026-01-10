@@ -9,7 +9,8 @@
 
 **Decision**: Use marked.js for Markdown parsing.
 
-**Rationale**: 
+**Rationale**:
+
 - Lightweight (~47KB minified)
 - Full GitHub Flavored Markdown (GFM) support
 - Highly configurable
@@ -17,11 +18,13 @@
 - No build step required, available via CDN
 
 **Alternatives Considered**:
+
 - markdown-it - Good alternative, slightly larger, more plugins
 - showdown - Older, less active
 - remark - Requires build pipeline, rejected
 
 **CDN Source**:
+
 ```html
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 ```
@@ -31,6 +34,7 @@
 **Decision**: Use DOMPurify for HTML sanitization.
 
 **Rationale**:
+
 - Industry-standard XSS prevention
 - Lightweight (~13KB minified)
 - Highly configurable whitelist
@@ -38,6 +42,7 @@
 - Required by constitution security requirements
 
 **CDN Source**:
+
 ```html
 <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
 ```
@@ -47,12 +52,14 @@
 **Decision**: Use highlight.js for code block syntax highlighting.
 
 **Rationale**:
+
 - Lightweight core with language plugins
 - 190+ languages supported
 - Integrates with marked.js
 - Available via CDN with theme CSS
 
 **CDN Source**:
+
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js/styles/github.min.css">
 <script src="https://cdn.jsdelivr.net/npm/highlight.js/lib/core.min.js"></script>
@@ -64,11 +71,13 @@
 **Decision**: Configure marked.js to add `target="_blank"` and `rel="noopener noreferrer"` to external links.
 
 **Rationale**:
+
 - Prevents tabnabbing attacks
 - Opens external links in new tab (expected UX)
 - Required by FR-003
 
 **Implementation**:
+
 ```javascript
 const renderer = new marked.Renderer();
 renderer.link = function(href, title, text) {
@@ -81,11 +90,13 @@ renderer.link = function(href, title, text) {
 **Decision**: Allow external images with max-width constraint via CSS.
 
 **Rationale**:
+
 - Blocking all external images would break many documents
 - CSS constraint prevents layout issues
 - DOMPurify can be configured to allow img tags safely
 
 **CSS**:
+
 ```css
 .markdown-content img {
   max-width: 100%;
@@ -98,6 +109,7 @@ renderer.link = function(href, title, text) {
 **Decision**: Configure DOMPurify to allow safe HTML while stripping all dangerous elements.
 
 **Allowed**:
+
 - Basic formatting: `em`, `strong`, `code`, `pre`, `blockquote`
 - Links: `a` (with href validation)
 - Images: `img` (with src validation)
@@ -106,6 +118,7 @@ renderer.link = function(href, title, text) {
 - Headings: `h1`-`h6`
 
 **Stripped**:
+
 - `script`, `style`, `iframe`, `object`, `embed`
 - Event handlers: `onclick`, `onerror`, etc.
 - JavaScript URLs: `javascript:`, `data:` with scripts

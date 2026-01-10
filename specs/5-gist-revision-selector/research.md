@@ -9,12 +9,14 @@
 
 **Decision**: Use the existing `GET /gists/{gist_id}` endpoint which includes revision history.
 
-**Rationale**: 
+**Rationale**:
+
 - The main Gist endpoint returns a `history` array with all revisions
 - Each revision includes version ID and timestamp
 - Individual revisions fetched via `GET /gists/{gist_id}/{version}`
 
 **History Structure**:
+
 ```json
 {
   "history": [
@@ -39,6 +41,7 @@
 **Decision**: Use `GET /gists/{gist_id}/{sha}` to fetch content at a specific revision.
 
 **Rationale**:
+
 - Returns full Gist structure at that point in time
 - Same response format as base Gist endpoint
 - Counts toward rate limit like other requests
@@ -48,12 +51,14 @@
 **Decision**: Use native `<select>` element for the revision selector.
 
 **Rationale**:
+
 - Accessible by default (keyboard, screen reader)
 - No JavaScript library needed
 - Handles long lists with native scrolling
 - Consistent across platforms
 
 **Alternatives Considered**:
+
 - Custom dropdown - Rejected: Adds complexity, accessibility concerns
 - List view - Rejected: Takes more screen space
 
@@ -62,11 +67,13 @@
 **Decision**: Display absolute timestamps in localized format (e.g., "Jan 8, 2026 2:30 PM").
 
 **Rationale**:
+
 - Clear and unambiguous
 - Required by spec clarifications
 - Use `Intl.DateTimeFormat` for localization
 
 **Format**:
+
 ```javascript
 new Intl.DateTimeFormat('en-US', {
   month: 'short',
@@ -82,11 +89,13 @@ new Intl.DateTimeFormat('en-US', {
 **Decision**: Use `?gist={id}&rev={version}` URL format with History API for navigation.
 
 **Rationale**:
+
 - Enables shareable revision-specific links
 - Browser back/forward navigation works naturally
 - Required by FR-010, FR-011, FR-012
 
 **Implementation**:
+
 ```javascript
 // Update URL when revision changes
 history.pushState({rev: versionId}, '', `?gist=${gistId}&rev=${versionId}`);
@@ -102,6 +111,7 @@ window.addEventListener('popstate', (event) => {
 **Decision**: Load all revisions in dropdown with native browser scrolling.
 
 **Rationale**:
+
 - Spec explicitly states: "Scrollable dropdown with all revisions loaded"
 - Native `<select>` handles this efficiently
 - Simpler than pagination
