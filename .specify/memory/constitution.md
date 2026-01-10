@@ -1,13 +1,10 @@
 <!--
 SYNC IMPACT REPORT
 ==================
-Version change: N/A → 1.0.0 (Initial ratification)
-Modified principles: None (initial version)
+Version change: 1.1.0 → 1.2.0 (Local development environment requirement added)
+Modified principles: None
 Added sections:
-  - Core Principles (5 principles)
-  - Security Requirements
-  - Development Standards
-  - Governance
+  - Local development requirements added to Deployment Requirements
 Removed sections: None
 Templates requiring updates:
   - plan-template.md ✅ (no updates required - generic template compatible)
@@ -109,6 +106,27 @@ All code contributions MUST adhere to these standards:
 **Rationale**: These standards ensure maintainability, reliability, and inclusive access
 while respecting GitHub API constraints.
 
+## Deployment Requirements
+
+The application MUST be deployed using GitHub Pages.
+
+**Production**:
+- Production hosting MUST use GitHub Pages from the repository's configured branch
+- No external hosting providers, CDNs, or custom servers are permitted for the main application
+- Custom domains MAY be configured via GitHub Pages settings
+- Build artifacts (if any) MUST be compatible with GitHub Pages static file serving
+
+**Local Development**:
+- The application MUST be testable from a local machine via localhost URL
+- A simple HTTP server (e.g., `python -m http.server`, `npx serve`) MUST be sufficient to run locally
+- No complex build pipeline or toolchain MUST be required for local testing
+- All features MUST function identically in local and production environments
+- OAuth flows MAY require additional configuration for localhost redirect URIs
+
+**Rationale**: GitHub Pages deployment reinforces the Zero Backend principle and eliminates
+hosting costs. Local development support enables rapid iteration and testing without
+deploying to production.
+
 ## Governance
 
 This constitution supersedes all other development practices for the Gist Review project.
@@ -128,4 +146,4 @@ This constitution supersedes all other development practices for the Gist Review
 - Deviations MUST be explicitly justified in PR descriptions
 - Periodic reviews SHOULD assess principle effectiveness
 
-**Version**: 1.0.0 | **Ratified**: 2026-01-09 | **Last Amended**: 2026-01-09
+**Version**: 1.2.0 | **Ratified**: 2026-01-09 | **Last Amended**: 2026-01-10
