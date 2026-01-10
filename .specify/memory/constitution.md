@@ -111,12 +111,14 @@ while respecting GitHub API constraints.
 The application MUST be deployed using GitHub Pages.
 
 **Production**:
+
 - Production hosting MUST use GitHub Pages from the repository's configured branch
 - No external hosting providers, CDNs, or custom servers are permitted for the main application
 - Custom domains MAY be configured via GitHub Pages settings
 - Build artifacts (if any) MUST be compatible with GitHub Pages static file serving
 
 **Local Development**:
+
 - The application MUST be testable from a local machine via localhost URL
 - A simple HTTP server (e.g., `python -m http.server`, `npx serve`) MUST be sufficient to run locally
 - No complex build pipeline or toolchain MUST be required for local testing
