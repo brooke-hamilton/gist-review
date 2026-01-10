@@ -5,6 +5,15 @@
 **Status**: Draft  
 **Input**: User description: "Enable authenticated users to create a new Gist comment anchored to the current text selection. Embed the selection metadata (line, offsets, selected text, Gist revision) as YAML front matter in the comment body. Submit using the GitHub API."
 
+## Clarifications
+
+### Session 2026-01-10
+
+- Q: Where should the comment input UI appear when the user wants to create a comment? → A: Expand selection popover to include a text input and submit button.
+- Q: What should be the exact YAML front matter schema for anchored comments? → A: Flat structure with keys: `line_start`, `line_end`, `offset_start`, `offset_end`, `selected_text`, `revision`, `file`.
+- Q: Should the comment draft be preserved if the user needs to re-authenticate mid-submission? → A: Yes, preserve draft in sessionStorage and restore after re-auth.
+- Q: Should users be able to preview their comment as rendered Markdown before submitting? → A: Yes, provide a preview tab/toggle to see rendered Markdown.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Create Comment on Selected Text (Priority: P1)
@@ -60,7 +69,7 @@ An unauthenticated user selects text and attempts to create a comment. The appli
 - What happens when the comment submission fails (API error)?
   - Display an error message and allow the user to retry without losing their comment text.
 - What happens when the user's authentication expires during comment creation?
-  - Detect the auth failure and prompt re-authentication, preserving the comment draft if possible.
+  - Detect the auth failure, preserve the comment draft in sessionStorage, prompt re-authentication, and restore the draft after successful login.
 - What happens when the selected text has special characters that might break YAML?
   - Properly escape the selected text in the YAML front matter.
 - What happens when the user tries to submit an empty comment?
@@ -71,6 +80,8 @@ An unauthenticated user selects text and attempts to create a comment. The appli
 ### Functional Requirements
 
 - **FR-001**: System MUST allow authenticated users to create comments on Gists
+- **FR-001a**: System MUST display comment input (text area and submit button) in an expanded selection popover
+- **FR-001b**: System MUST provide a preview tab/toggle to show comment as rendered Markdown before submission
 - **FR-002**: System MUST embed selection metadata as YAML front matter in the comment body
 - **FR-003**: System MUST include line number in the front matter
 - **FR-004**: System MUST include selection start offset in the front matter
@@ -81,13 +92,15 @@ An unauthenticated user selects text and attempts to create a comment. The appli
 - **FR-009**: System MUST display the new comment in the sidebar after successful submission
 - **FR-010**: System MUST prompt unauthenticated users to log in when attempting to comment
 - **FR-011**: System MUST handle submission errors gracefully with user-friendly messages
+- **FR-011a**: System MUST preserve comment draft in sessionStorage during re-authentication flow
+- **FR-011b**: System MUST restore comment draft after successful re-authentication
 - **FR-012**: System MUST validate that comment text is not empty before submission
 - **FR-013**: System MUST properly escape special characters in the YAML front matter
 
 ### Key Entities
 
 - **Anchored Comment**: A Gist comment containing YAML front matter with metadata linking it to a specific text selection and revision.
-- **Comment Front Matter**: YAML metadata embedded at the beginning of a comment, containing line, offsets, selected text, and revision ID.
+- **Comment Front Matter**: YAML metadata with fields: `line_start` (int), `line_end` (int), `offset_start` (int), `offset_end` (int), `selected_text` (string), `revision` (string), `file` (string).
 
 ## Success Criteria *(mandatory)*
 
@@ -104,5 +117,5 @@ An unauthenticated user selects text and attempts to create a comment. The appli
 - The GitHub OAuth Authentication feature (Task 6) is complete and provides authenticated API access
 - The Fetch and Display Gist Comments feature (Task 7) is complete for displaying new comments
 - The Text Selection Capture feature (Task 8) is complete and provides selection metadata
-- YAML front matter format follows a consistent schema that can be parsed by the display feature
+- YAML front matter uses flat schema: `line_start`, `line_end`, `offset_start`, `offset_end`, `selected_text`, `revision`, `file`
 - The GitHub Gist Comments API is available for creating comments on Gists the user has access to

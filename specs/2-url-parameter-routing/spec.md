@@ -72,11 +72,12 @@ A user navigates to the application without a `gist` parameter or with an empty 
 - **FR-001**: System MUST parse the `gist` query parameter from the current page URL
 - **FR-002**: System MUST accept bare Gist IDs (alphanumeric strings) as valid input
 - **FR-003**: System MUST accept full GitHub Gist URLs and extract the Gist ID from the path
-- **FR-004**: System MUST display the extracted Gist ID prominently in the main content area
-- **FR-005**: System MUST display a helpful message when no `gist` parameter is provided
-- **FR-006**: System MUST display a helpful message when the `gist` parameter is empty
+- **FR-004**: System MUST display the extracted Gist ID in labeled format (e.g., "Gist ID: abc123") prominently in the main content area
+- **FR-005**: System MUST display a helpful message with example URL (e.g., "Add ?gist=YOUR_GIST_ID to the URL. Example: ?gist=abc123") when no `gist` parameter is provided
+- **FR-006**: System MUST display the same helpful message when the `gist` parameter is empty
 - **FR-007**: System MUST handle URL-encoded characters in the parameter value
 - **FR-008**: System MUST use only the first `gist` parameter if multiple are provided
+- **FR-009**: System MUST implement URL parsing logic in a single external `app.js` file linked from the HTML
 
 ## Success Criteria *(mandatory)*
 
@@ -87,6 +88,14 @@ A user navigates to the application without a `gist` parameter or with an empty 
 - **SC-003**: Navigating without a `gist` parameter displays a guidance message within 1 second
 - **SC-004**: 100% of valid Gist URLs from github.com are correctly parsed to extract the Gist ID
 - **SC-005**: Users can bookmark URLs with `gist` parameters and return to the same state
+
+## Clarifications
+
+### Session 2025-01-10
+
+- Q: How should the extracted Gist ID be displayed to the user? → A: Labeled format (e.g., `Gist ID: abc123`)
+- Q: How should JavaScript code be organized? → A: Single external `app.js` file
+- Q: What content should the guidance message include when gist parameter is missing? → A: Text with example URL
 
 ## Assumptions
 

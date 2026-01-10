@@ -5,6 +5,15 @@
 **Status**: Draft  
 **Input**: User description: "Configure GitHub Pages deployment for the repository. Set up the repository to serve the static site from the appropriate branch. Add any necessary deployment documentation to the README."
 
+## Clarifications
+
+### Session 2026-01-10
+
+- Q: What GitHub Pages deployment source should be used? → A: GitHub Actions workflow.
+- Q: How should 404 errors be handled for SPA client-side routing? → A: Add a 404.html that redirects to index.html with query params preserved.
+- Q: Should a build step be included even if not currently required? → A: Yes, include a simple build/copy step in the workflow for future extensibility.
+- Q: What deployment status badge should be added to the README? → A: GitHub Actions workflow status badge.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Access Application at GitHub Pages URL (Priority: P1)
@@ -69,13 +78,14 @@ A new contributor reads the README to understand how deployment works. They find
 ### Functional Requirements
 
 - **FR-001**: System MUST be accessible at the GitHub Pages URL `https://{owner}.github.io/gist-review/`
-- **FR-002**: System MUST deploy automatically when changes are pushed to the main branch
+- **FR-002**: System MUST deploy automatically via GitHub Actions workflow when changes are pushed to the main branch
 - **FR-003**: System MUST serve all static files correctly (HTML, CSS, JS, images)
-- **FR-004**: System MUST support URL parameter routing (`?gist=...`) on GitHub Pages
+- **FR-004**: System MUST support URL parameter routing via 404.html redirect to index.html preserving query params
 - **FR-005**: System MUST document the deployment configuration in the README
 - **FR-006**: System MUST document how to verify successful deployment
-- **FR-007**: System SHOULD show deployment status in GitHub Actions
-- **FR-008**: System MAY support custom domain configuration (optional)
+- **FR-007**: System MUST show deployment status via GitHub Actions workflow status badge in README
+- **FR-008**: System MUST include a build/copy step in the workflow for future extensibility
+- **FR-009**: System MAY support custom domain configuration (optional)
 
 ### Key Entities
 
@@ -95,7 +105,7 @@ A new contributor reads the README to understand how deployment works. They find
 ## Assumptions
 
 - The Static Site Foundation feature (Task 1) is complete and provides deployable static files
-- The repository is hosted on GitHub with GitHub Pages available
-- No build step is required; static files are served directly
-- The default branch is `main` and is the source for GitHub Pages deployment
-- GitHub Actions is available for automated deployment workflows
+- The repository is hosted on GitHub with GitHub Pages and GitHub Actions available
+- A GitHub Actions workflow handles the deployment with a simple build/copy step
+- The default branch is `main` and triggers the deployment workflow
+- GitHub Pages is configured to deploy from GitHub Actions (not branch source)

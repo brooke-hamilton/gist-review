@@ -17,7 +17,7 @@ A user opens the Gist Review application in their web browser and sees a clean, 
 
 **Acceptance Scenarios**:
 
-1. **Given** the user has no prior interaction with the app, **When** they navigate to the application URL, **Then** they see a page with a header containing the application name "Gist Review" and an empty main content area.
+1. **Given** the user has no prior interaction with the app, **When** they navigate to the application URL, **Then** they see a page with a header containing the application name "Gist Review", an empty main content area, and a footer with copyright notice.
 2. **Given** the page is loaded, **When** the user views the page on different screen sizes (desktop, tablet, mobile), **Then** the layout adapts appropriately and remains usable.
 
 ---
@@ -69,10 +69,13 @@ A maintainer pushes the repository to GitHub and configures GitHub Pages to serv
 - **FR-001**: System MUST serve a single `index.html` file as the application entry point
 - **FR-002**: System MUST display a header section containing the application name "Gist Review"
 - **FR-003**: System MUST display a main content area that will contain Gist content in future iterations
-- **FR-004**: System MUST include CSS styling embedded in the HTML or in a separate CSS file
+- **FR-004**: System MUST include CSS styling in a separate `styles.css` file linked from the HTML
 - **FR-005**: System MUST function without any build toolchain or compilation step
 - **FR-006**: System MUST be servable by any static file HTTP server (Python http.server, npx serve, GitHub Pages)
-- **FR-007**: System MUST use semantic HTML elements for page structure (header, main, etc.)
+- **FR-007**: System MUST use semantic HTML elements for page structure (header, main, footer)
+- **FR-008**: System MUST constrain main content area to a maximum width of 1200px, centered horizontally on larger viewports
+- **FR-009**: System MUST respect user's system color scheme preference via `prefers-color-scheme` media query, providing both light and dark theme styles
+- **FR-010**: System MUST display a footer section containing a copyright notice
 
 ## Success Criteria *(mandatory)*
 
@@ -83,7 +86,17 @@ A maintainer pushes the repository to GitHub and configures GitHub Pages to serv
 - **SC-003**: Running `npx serve` and accessing the provided URL successfully serves the application
 - **SC-004**: Enabling GitHub Pages on the repository makes the application accessible within 5 minutes
 - **SC-005**: The page structure is readable and functional without JavaScript enabled
-- **SC-006**: The page is usable on viewport widths from 320px to 1920px
+- **SC-006**: The page is usable on viewport widths from 320px to 1920px using mobile-first CSS with a single breakpoint at 768px
+
+## Clarifications
+
+### Session 2025-01-10
+
+- Q: CSS organization strategy - embedded in HTML or separate file? → A: Separate `styles.css` file linked from HTML
+- Q: Responsive breakpoint strategy for 320px-1920px viewport range? → A: Mobile-first with single breakpoint at 768px
+- Q: Maximum content width behavior on large screens? → A: Max-width 1200px, centered on larger screens
+- Q: Color scheme preference for initial shell? → A: System preference (auto-detect via `prefers-color-scheme`)
+- Q: Should initial shell include a footer element? → A: Minimal footer with copyright notice
 
 ## Assumptions
 

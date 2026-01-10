@@ -5,6 +5,15 @@
 **Status**: Draft  
 **Input**: User description: "Implement fetching a public Gist from the GitHub API using the extracted Gist ID. Display the raw Markdown content of the first file in the Gist. Handle API errors gracefully with user-friendly messages."
 
+## Clarifications
+
+### Session 2026-01-10
+
+- Q: When the GitHub API returns a rate limit error (HTTP 403 with rate limit exceeded), how should the application respond? → A: Display a specific "Rate limit exceeded" message with estimated reset time.
+- Q: Should fetched Gist data be cached in the browser to reduce API calls and improve performance on repeat visits? → A: No caching - always fetch fresh from GitHub API.
+- Q: What timeout duration should be used for the GitHub API fetch request before considering it a failure? → A: 10 seconds.
+- Q: How should the retry button behave after a failed fetch attempt? → A: Immediate retry with loading indicator shown again.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - View Public Gist Content (Priority: P1)
@@ -50,7 +59,7 @@ A user with an unstable internet connection attempts to load a Gist. The connect
 
 1. **Given** a network failure occurs, **When** the Gist fetch fails, **Then** the page displays a message like "Unable to connect. Please check your internet connection."
 2. **Given** a network error is displayed, **When** the user sees the error, **Then** they have an option to retry the fetch.
-3. **Given** the user clicks retry, **When** the network is restored, **Then** the Gist content loads successfully.
+3. **Given** the user clicks retry, **When** the retry is initiated, **Then** the loading indicator is shown immediately and the Gist content loads successfully when the network is restored.
 
 ---
 
@@ -64,6 +73,8 @@ A user with an unstable internet connection attempts to load a Gist. The connect
   - Display the content as-is; performance optimization may be addressed in future features.
 - What happens when the Gist content is not Markdown?
   - Display the raw content regardless of file type; the application is Markdown-focused but can show any text.
+- What happens when the GitHub API rate limit is exceeded?
+  - Display a specific "Rate limit exceeded" message including the estimated reset time (extracted from API response headers).
 
 ## Requirements *(mandatory)*
 
@@ -77,6 +88,7 @@ A user with an unstable internet connection attempts to load a Gist. The connect
 - **FR-006**: System MUST provide a retry option when fetch fails due to network issues
 - **FR-007**: System MUST handle private Gist access gracefully with an appropriate message
 - **FR-008**: System MUST handle empty Gists (no files) with an appropriate message
+- **FR-009**: System MUST display a specific rate limit error message with estimated reset time when GitHub API rate limit is exceeded
 
 ### Key Entities
 
@@ -92,6 +104,7 @@ A user with an unstable internet connection attempts to load a Gist. The connect
 - **SC-003**: 100% of public Gists are viewable without authentication
 - **SC-004**: Users can successfully retry after a transient network failure
 - **SC-005**: Error messages are understandable by non-technical users (no raw error codes or stack traces)
+- **SC-006**: API fetch requests timeout after 10 seconds and display a timeout error message
 
 ## Assumptions
 
@@ -100,3 +113,4 @@ A user with an unstable internet connection attempts to load a Gist. The connect
 - The static site foundation (Task 1) provides the page structure for displaying content
 - Public Gists are the primary use case; private Gist support may require authentication in a future feature
 - The first file in a Gist is determined by alphabetical ordering of filenames (GitHub's default behavior)
+- No browser caching of Gist data; always fetch fresh content from the GitHub API on each request

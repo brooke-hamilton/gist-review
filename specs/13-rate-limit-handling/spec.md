@@ -5,6 +5,15 @@
 **Status**: Draft  
 **Input**: User description: "Implement GitHub API rate limit awareness. Display remaining rate limit to users. When rate limited, show clear messaging with reset time and suggest authentication if unauthenticated."
 
+## Clarifications
+
+### Session 2026-01-10
+
+- Q: Where should the rate limit status be displayed in the UI? → A: Small indicator in the header/toolbar area.
+- Q: What threshold should trigger the "low rate limit" warning? → A: 10 remaining requests.
+- Q: How should the reset time be displayed to users? → A: Countdown format (e.g., "Resets in 23 minutes").
+- Q: Should the rate limit display show usage as a fraction or just remaining? → A: Show as fraction (e.g., "45/60 remaining").
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - View Rate Limit Status (Priority: P1)
@@ -62,7 +71,7 @@ An unauthenticated user hits the rate limit. The message suggests they can log i
 - What happens when the clock on the user's device is significantly wrong?
   - Use the reset time from the API response rather than calculating locally.
 - What happens when the user is close to but not at the rate limit?
-  - Consider displaying a warning when below a threshold (e.g., 10 requests remaining).
+  - Display a warning when below 10 requests remaining.
 - What happens during the rate limit reset transition?
   - The displayed status should update to show the refreshed limit.
 
@@ -71,14 +80,14 @@ An unauthenticated user hits the rate limit. The message suggests they can log i
 ### Functional Requirements
 
 - **FR-001**: System MUST parse rate limit headers from GitHub API responses
-- **FR-002**: System MUST display the remaining rate limit count to users
+- **FR-002**: System MUST display the rate limit as a fraction (e.g., "45/60 remaining") in a small header indicator
 - **FR-003**: System MUST display a user-friendly message when rate limit is exceeded (403 response)
-- **FR-004**: System MUST display the rate limit reset time when rate limited
+- **FR-004**: System MUST display the rate limit reset time as a countdown (e.g., "Resets in 23 minutes")
 - **FR-005**: System MUST suggest authentication to unauthenticated users when rate limited
 - **FR-006**: System MUST update rate limit display after each API request
 - **FR-007**: System MUST handle missing rate limit headers gracefully
 - **FR-008**: System MUST distinguish between authenticated and unauthenticated rate limits
-- **FR-009**: System MAY display a warning when rate limit is running low (e.g., <10 remaining)
+- **FR-009**: System MUST display a warning when rate limit falls below 10 remaining requests
 
 ### Key Entities
 
@@ -101,4 +110,4 @@ An unauthenticated user hits the rate limit. The message suggests they can log i
 - GitHub API responses include rate limit headers (`X-RateLimit-Remaining`, `X-RateLimit-Reset`, etc.)
 - Unauthenticated requests have a limit of 60 per hour per IP
 - Authenticated requests have a limit of 5000 per hour
-- The rate limit display is unobtrusive during normal usage but visible when needed
+- The rate limit display is a small indicator in the header area, unobtrusive during normal usage but visible when needed

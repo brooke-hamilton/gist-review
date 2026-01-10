@@ -5,6 +5,15 @@
 **Status**: Draft  
 **Input**: User description: "Implement text selection tracking in the rendered Markdown content. When the user selects text, capture: line number, selection start offset, selection end offset, and selected text. Display the captured selection data in a temporary UI element."
 
+## Clarifications
+
+### Session 2026-01-10
+
+- Q: What type of UI element should display the selection metadata? → A: Tooltip/popover appearing near the selected text.
+- Q: For multi-line selections, should the end line number also be captured? → A: Yes, capture both start line and end line numbers.
+- Q: How should whitespace-only selections be handled? → A: Ignore silently (no popover appears).
+- Q: Should there be a minimum text selection length before showing the popover? → A: Minimum 3 characters.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Select Text and View Selection Metadata (Priority: P1)
@@ -60,7 +69,7 @@ A user selects a portion of a line rather than the entire line. The captured sta
 - What happens when the user selects text across rendered element boundaries (e.g., bold text and normal text)?
   - The selection should capture the full selected text and reasonable offset estimates.
 - What happens when the user selects only whitespace?
-  - Whitespace-only selections may be ignored or flagged as invalid for commenting.
+  - Whitespace-only selections are ignored silently; no popover appears.
 - What happens when the user clears their selection (clicks elsewhere)?
   - The selection metadata UI should disappear or reset.
 - What happens when text is selected in code blocks?
@@ -71,18 +80,21 @@ A user selects a portion of a line rather than the entire line. The captured sta
 ### Functional Requirements
 
 - **FR-001**: System MUST detect when the user selects text in the rendered Markdown content
+- **FR-001a**: System MUST ignore whitespace-only selections (no UI shown)
+- **FR-001b**: System MUST require a minimum of 3 characters before showing selection popover
 - **FR-002**: System MUST capture the selected text content
 - **FR-003**: System MUST capture the line number where the selection starts (based on source Markdown)
+- **FR-003a**: System MUST capture the line number where the selection ends (for multi-line selections)
 - **FR-004**: System MUST capture the character offset where the selection starts within the line
 - **FR-005**: System MUST capture the character offset where the selection ends
-- **FR-006**: System MUST display captured selection data in a visible UI element
+- **FR-006**: System MUST display captured selection data in a tooltip/popover near the selected text
 - **FR-007**: System MUST update or hide the selection UI when the selection changes or clears
 - **FR-008**: System MUST handle selections that cross element boundaries (e.g., formatted text)
 - **FR-009**: System MUST accurately map rendered HTML positions back to source Markdown lines
 
 ### Key Entities
 
-- **Text Selection**: A user's selected text within the rendered content, characterized by selected text, source line number, start offset, and end offset.
+- **Text Selection**: A user's selected text within the rendered content, characterized by selected text, start line number, end line number, start offset, and end offset.
 
 ## Success Criteria *(mandatory)*
 

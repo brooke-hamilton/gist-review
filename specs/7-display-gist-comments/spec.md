@@ -5,6 +5,15 @@
 **Status**: Draft  
 **Input**: User description: "Fetch comments for the current Gist using the GitHub API (authenticated for private gists). Display comments in a sidebar or panel. Parse any YAML/JSON front matter from comment bodies to extract review metadata."
 
+## Clarifications
+
+### Session 2026-01-10
+
+- Q: Where should the comments sidebar be positioned relative to the Gist content? → A: Right sidebar (content on left, comments on right).
+- Q: In what order should comments be displayed in the sidebar? → A: Group by anchor position in document, then chronological within groups.
+- Q: What delimiter format should be used to identify front matter in comment bodies? → A: Triple dashes only (`---` at start and end of front matter block).
+- Q: Should the comments sidebar be collapsible to maximize content viewing area? → A: Yes, collapsible with a toggle button (default expanded).
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - View Comments on Public Gist (Priority: P1)
@@ -71,8 +80,12 @@ A user views a Gist with comments that contain review metadata in YAML or JSON f
 ### Functional Requirements
 
 - **FR-001**: System MUST fetch comments for the currently displayed Gist
-- **FR-002**: System MUST display comments in a sidebar or panel adjacent to the content
+- **FR-002**: System MUST display comments in a right sidebar adjacent to the Gist content
+- **FR-002a**: System MUST provide a toggle button to collapse/expand the comments sidebar
+- **FR-002b**: System MUST default to expanded state for the comments sidebar
 - **FR-003**: System MUST display comment author and timestamp for each comment
+- **FR-003a**: System MUST order comments by anchor position in document, then chronologically within each anchor group
+- **FR-003b**: System MUST display unanchored comments after anchored comments in chronological order
 - **FR-004**: System MUST fetch comments for public Gists without authentication
 - **FR-005**: System MUST fetch comments for private Gists using authenticated requests
 - **FR-006**: System MUST parse YAML front matter from comment bodies when present
@@ -101,6 +114,6 @@ A user views a Gist with comments that contain review metadata in YAML or JSON f
 
 - The Fetch and Display Public Gist feature (Task 3) is complete
 - The GitHub OAuth Authentication feature (Task 6) is complete for private Gist access
-- Comments follow a convention of YAML or JSON front matter delimited by `---` or similar markers
+- Comments use YAML or JSON front matter delimited by triple dashes (`---`) at the start and end of the metadata block
 - The Markdown rendering feature (Task 4) can be reused for comment body formatting
 - The GitHub API provides comment data including author and timestamp

@@ -5,6 +5,15 @@
 **Status**: Draft  
 **Input**: User description: "Ensure the page displays meaningful content (title, description) without JavaScript for SEO purposes. Add appropriate meta tags and Open Graph tags for link previews when sharing Gist Review URLs."
 
+## Clarifications
+
+### Session 2026-01-10
+
+- Q: Should an Open Graph preview image be included, and if so, what image? → A: Yes, include a static branded image (logo with app name on solid background).
+- Q: What message should display to users when JavaScript is disabled? → A: "Gist Review requires JavaScript for full functionality. Please enable JavaScript to view and comment on Gists."
+- Q: What Twitter Card type should be used? → A: `summary` card type.
+- Q: What content should be in the noscript fallback beyond the message? → A: Include app logo, title, brief feature list, and link to GitHub repo.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - View Page with JavaScript Disabled (Priority: P1)
@@ -58,7 +67,7 @@ A search engine crawls the Gist Review application. The page has proper semantic
 ### Edge Cases
 
 - What happens when the page is loaded with a Gist parameter but no JavaScript?
-  - Display a message suggesting JavaScript is needed for full functionality, but still show static content.
+  - Display the noscript fallback: app logo, title, brief feature list, message "Gist Review requires JavaScript for full functionality. Please enable JavaScript to view and comment on Gists.", and link to GitHub repo.
 - What happens when Open Graph tags contain special characters?
   - Properly escape special characters in meta tag content.
 - What happens when the page URL is shared before any Gist is loaded?
@@ -74,10 +83,11 @@ A search engine crawls the Gist Review application. The page has proper semantic
 - **FR-004**: System MUST include a meta description tag
 - **FR-005**: System MUST include a proper title tag
 - **FR-006**: System MUST include Open Graph meta tags (og:title, og:description)
-- **FR-007**: System MUST include Twitter Card meta tags (twitter:card, twitter:title, twitter:description)
-- **FR-008**: System MAY include an Open Graph image tag (og:image)
+- **FR-007**: System MUST include Twitter Card meta tags with `summary` card type (twitter:card, twitter:title, twitter:description)
+- **FR-008**: System MUST include an Open Graph image tag (og:image) with a static branded image
 - **FR-009**: System MUST ensure meta tags contain properly escaped content
 - **FR-010**: System MUST maintain readable content structure when CSS fails to load
+- **FR-011**: System MUST display a noscript fallback with: app logo, title, feature list, JS-required message, and GitHub repo link
 
 ### Key Entities
 
@@ -98,6 +108,6 @@ A search engine crawls the Gist Review application. The page has proper semantic
 
 - The Markdown Rendering feature (Task 4) is complete
 - Static content (title, description) is sufficient for SEO; dynamic Gist content indexing would require server-side rendering (out of scope)
-- Open Graph images, if used, will be static assets served with the application
+- Open Graph image is a static branded asset (logo with app name on solid background) served with the application
 - The application is primarily a single-page application but with meaningful static HTML fallback
 - Social media platforms cache previews, so changes to meta tags may take time to reflect

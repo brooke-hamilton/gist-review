@@ -5,6 +5,15 @@
 **Status**: Draft  
 **Input**: User description: "Implement GitHub OAuth authentication using the Device Flow (or a minimal OAuth proxy). Request only the `gist` scope. Store the access token in localStorage. Show login/logout state in the UI header. Document any localhost-specific OAuth configuration needed for local development."
 
+## Clarifications
+
+### Session 2026-01-10
+
+- Q: Which GitHub OAuth flow should be implemented? → A: Device Flow (no backend needed, user enters code on GitHub).
+- Q: What user information should be displayed in the header when logged in? → A: Avatar image + username.
+- Q: How should the app handle an expired or revoked token when making API requests? → A: Show error message explaining session expired with re-login prompt.
+- Q: During Device Flow, how should the user code and verification URL be presented to the user? → A: Modal dialog with copy button for code and link to GitHub verification page.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Log In with GitHub (Priority: P1)
@@ -76,7 +85,7 @@ A developer testing the application locally needs to complete the OAuth flow fro
 - What happens when the OAuth flow is cancelled by the user?
   - The user remains logged out and can try again.
 - What happens when the stored token expires or is revoked?
-  - The app should detect authentication failures and prompt re-authentication.
+  - The app displays an error message explaining the session has expired and prompts the user to log in again.
 - What happens when OAuth is initiated from a private browsing window?
   - The flow should work but the session won't persist after closing the window.
 - What happens when multiple tabs are open and the user logs in/out in one?
@@ -87,17 +96,20 @@ A developer testing the application locally needs to complete the OAuth flow fro
 ### Functional Requirements
 
 - **FR-001**: System MUST provide a login button for unauthenticated users
-- **FR-002**: System MUST initiate GitHub OAuth when the login button is clicked
+- **FR-002**: System MUST initiate GitHub OAuth Device Flow when the login button is clicked
+- **FR-002a**: System MUST display the user code and verification URL in a modal dialog with a copy button and link to GitHub
+- **FR-002b**: System MUST poll for authorization completion during Device Flow
 - **FR-003**: System MUST request only the `gist` scope during OAuth authorization
 - **FR-004**: System MUST store the access token securely in browser storage
-- **FR-005**: System MUST display the user's authenticated state in the UI header
+- **FR-005**: System MUST display the user's avatar image and username in the UI header when authenticated
+- **FR-005a**: System MUST fetch user profile information after successful authentication
 - **FR-006**: System MUST persist authentication across page refreshes
 - **FR-007**: System MUST persist authentication across browser sessions
 - **FR-008**: System MUST provide a logout button for authenticated users
 - **FR-009**: System MUST clear stored authentication when the user logs out
 - **FR-010**: System MUST support OAuth flow from localhost for local development
 - **FR-011**: System MUST handle OAuth flow cancellation gracefully
-- **FR-012**: System MUST detect and handle expired or revoked tokens
+- **FR-012**: System MUST detect expired or revoked tokens and display an error message with re-login prompt
 
 ### Key Entities
 
@@ -116,8 +128,8 @@ A developer testing the application locally needs to complete the OAuth flow fro
 
 ## Assumptions
 
-- GitHub OAuth Device Flow or a minimal proxy service will handle token exchange
+- GitHub OAuth Device Flow will be used (no backend proxy required)
 - Browser localStorage is available and sufficient for token storage
 - The Static Site Foundation (Task 1) provides the header UI structure for login/logout display
 - GitHub's OAuth consent screen will show the requested scope to users
-- Localhost redirect URIs are configured in the GitHub OAuth application settings
+- A GitHub OAuth App (not GitHub App) will be configured with Device Flow enabled

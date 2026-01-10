@@ -5,6 +5,15 @@
 **Status**: Draft  
 **Input**: User description: "Highlight text regions in the rendered Markdown that have associated comments. Filter displayed highlights to show only comments matching the currently selected Gist revision. Clicking a highlight should scroll to/focus the related comment."
 
+## Clarifications
+
+### Session 2026-01-10
+
+- Q: What visual style should be used for text highlights? → A: Semi-transparent background color (e.g., yellow/amber).
+- Q: When clicking overlapping highlights with multiple comments, how should they be presented? → A: Show a small popup/menu listing all comments, user clicks to focus one.
+- Q: How should orphaned comments (anchored text no longer exists) be displayed in the sidebar? → A: Show with a visual indicator (e.g., warning icon, muted style) and tooltip explaining the anchor is outdated.
+- Q: Should there be a hover state on highlights before clicking? → A: Yes, subtle hover effect (e.g., darker background, cursor change) to indicate interactivity.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - See Highlighted Text with Comments (Priority: P1)
@@ -58,9 +67,9 @@ A user sees a highlighted region and wants to read the associated comment. They 
 ### Edge Cases
 
 - What happens when a comment's anchored text no longer exists in the current revision?
-  - The highlight should not appear, and the comment may show as "orphaned" in the sidebar.
+  - No highlight appears; the comment displays in the sidebar with a warning icon, muted style, and tooltip explaining the anchor is outdated.
 - What happens when multiple comments anchor to the exact same text selection?
-  - A single highlight should appear, and clicking it should show all associated comments.
+  - A single highlight appears; clicking it shows a popup menu listing all associated comments for the user to select.
 - What happens when anchored text spans multiple elements (e.g., across paragraphs)?
   - The highlight should span the full selection, even across element boundaries.
 - What happens when the highlighted text is very small (1-2 characters)?
@@ -70,14 +79,15 @@ A user sees a highlighted region and wants to read the associated comment. They 
 
 ### Functional Requirements
 
-- **FR-001**: System MUST visually highlight text regions that have associated comments
+- **FR-001**: System MUST visually highlight text regions using semi-transparent background color (e.g., yellow/amber)
+- **FR-001a**: System MUST show a subtle hover effect on highlights (darker background, pointer cursor) to indicate interactivity
 - **FR-002**: System MUST use comment front matter metadata to determine highlight positions
 - **FR-003**: System MUST filter highlights to show only comments matching the current revision
 - **FR-004**: System MUST update highlights when the user switches revisions
 - **FR-005**: System MUST allow users to click on highlights
 - **FR-006**: System MUST scroll to and focus the associated comment when a highlight is clicked
-- **FR-007**: System MUST handle comments with overlapping anchors (show all associated comments)
-- **FR-008**: System MUST handle comments whose anchored text no longer exists gracefully
+- **FR-007**: System MUST show a popup menu listing all comments when clicking overlapping anchors, allowing user to select one to focus
+- **FR-008**: System MUST display orphaned comments (anchor text no longer exists) with a warning indicator and explanatory tooltip in the sidebar
 - **FR-009**: System MUST visually distinguish the focused comment in the sidebar
 - **FR-010**: System MUST render highlights that span multiple elements correctly
 
@@ -102,4 +112,4 @@ A user sees a highlighted region and wants to read the associated comment. They 
 - The Fetch and Display Gist Comments feature (Task 7) is complete and provides parsed comment metadata
 - The Text Selection Capture feature (Task 8) provides understanding of line/offset mapping
 - Comment front matter contains line, offset, and revision data needed for positioning highlights
-- Highlights use a non-intrusive visual style (e.g., background color, underline) that doesn't interfere with readability
+- Highlights use semi-transparent yellow/amber background color with hover state for interactivity

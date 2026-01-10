@@ -5,6 +5,15 @@
 **Status**: Draft  
 **Input**: User description: "When a text highlight is clicked, show the associated comment(s) in a focused view. If multiple comments anchor to the same or overlapping selections, group them visually as a thread."
 
+## Clarifications
+
+### Session 2026-01-10
+
+- Q: What UI type should be used for the focused comment/thread view? → A: Expanded panel in the right sidebar.
+- Q: How should the timestamp be displayed in comment detail? → A: Relative time (e.g., "2 hours ago") with absolute time on hover tooltip.
+- Q: How should the user dismiss/close the focused view? → A: Both click outside and explicit close button.
+- Q: Should users be able to reply to comments within the thread view? → A: Yes, include a reply input at the bottom of the thread.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - View Comment Detail on Highlight Click (Priority: P1)
@@ -62,7 +71,7 @@ When viewing a comment in a thread or detail view, the user can see who made the
 - What happens when there are many comments in a thread (e.g., 10+)?
   - The thread should be scrollable and remain usable.
 - What happens when the user clicks outside the focused comment view?
-  - The focused view should close and return to the normal content view.
+  - The focused view closes; an explicit close button is also available.
 - What happens when overlapping comments are from different revisions but the text still exists?
   - Only show comments for the currently selected revision.
 
@@ -72,14 +81,15 @@ When viewing a comment in a thread or detail view, the user can see who made the
 
 - **FR-001**: System MUST display comment detail when a highlight is clicked
 - **FR-002**: System MUST display comment author in the detail view
-- **FR-003**: System MUST display comment timestamp in the detail view
+- **FR-003**: System MUST display comment timestamp as relative time (e.g., "2 hours ago") with absolute time available on hover
 - **FR-004**: System MUST group multiple comments as a thread when they anchor to the same text
 - **FR-005**: System MUST group comments with overlapping anchor selections as a thread
 - **FR-006**: System MUST order thread comments by timestamp (oldest first)
-- **FR-007**: System MUST allow the user to close the focused view and return to normal content view
+- **FR-007**: System MUST allow the user to close the focused view via click outside or explicit close button
 - **FR-008**: System MUST handle large threads with scrolling
 - **FR-009**: System MUST display the comment body content (rendered as Markdown if applicable)
 - **FR-010**: System MUST only show comments from the currently selected revision
+- **FR-011**: System MUST provide a reply input at the bottom of the thread for authenticated users to add comments
 
 ### Key Entities
 
@@ -102,4 +112,4 @@ When viewing a comment in a thread or detail view, the user can see who made the
 - Comment metadata includes author and timestamp from the GitHub API
 - The Markdown rendering feature (Task 4) can be reused for rendering comment body content
 - Overlapping selections are detected by comparing line and offset ranges
-- The focused view is a modal, popover, or expanded sidebar section (specific design is an implementation detail)
+- The focused view is an expanded panel in the right sidebar, reusing the existing comment sidebar structure

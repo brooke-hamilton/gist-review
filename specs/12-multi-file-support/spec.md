@@ -5,6 +5,15 @@
 **Status**: Draft  
 **Input**: User description: "Support Gists containing multiple files. Add a file selector UI to switch between files. Maintain separate comment anchoring per file. Preserve file selection in URL if possible."
 
+## Clarifications
+
+### Session 2026-01-10
+
+- Q: What UI type should be used for the file selector? → A: Horizontal tab bar above content area.
+- Q: For single-file Gists, should the file selector be shown? → A: Hide the file selector for single-file Gists.
+- Q: How should non-Markdown files be rendered? → A: Display as syntax-highlighted code using the existing highlight.js integration.
+- Q: What URL parameter name should be used for file selection? → A: `file` parameter (e.g., `?gist=abc&file=readme.md`).
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - View File List for Multi-File Gist (Priority: P1)
@@ -19,7 +28,7 @@ A user loads a Gist that contains multiple files. The application displays a fil
 
 1. **Given** a Gist contains multiple files, **When** the Gist is loaded, **Then** a file selector displays all file names.
 2. **Given** a file selector is visible, **When** viewing the files, **Then** the currently displayed file is visually indicated.
-3. **Given** a Gist contains only one file, **When** the Gist is loaded, **Then** the file selector may be hidden or show the single file.
+3. **Given** a Gist contains only one file, **When** the Gist is loaded, **Then** the file selector is hidden.
 
 ---
 
@@ -80,13 +89,14 @@ A user wants to share a link to a specific file within a multi-file Gist. The UR
 - What happens when file names contain special characters?
   - URL encode the file name in the URL parameter.
 - What happens when files are non-Markdown (e.g., JSON, code files)?
-  - Display the content as-is or with appropriate syntax highlighting (future enhancement).
+  - Display with syntax highlighting using the existing highlight.js integration.
 
 ## Requirements *(mandatory)*
 
 ### Functional Requirements
 
-- **FR-001**: System MUST display a file selector for Gists with multiple files
+- **FR-001**: System MUST display a horizontal tab bar file selector above the content area for Gists with multiple files
+- **FR-001a**: System MUST hide the file selector for single-file Gists
 - **FR-002**: System MUST list all file names from the Gist in the file selector
 - **FR-003**: System MUST visually indicate the currently selected file
 - **FR-004**: System MUST update the content area when a different file is selected
@@ -97,6 +107,7 @@ A user wants to share a link to a specific file within a multi-file Gist. The UR
 - **FR-009**: System MUST read the file parameter from URL and select that file on load
 - **FR-010**: System MUST default to the first file (alphabetically) when no file parameter is present
 - **FR-011**: System MUST handle missing file parameter gracefully (fall back to first file)
+- **FR-012**: System MUST render non-Markdown files with syntax highlighting using the existing highlight.js integration
 
 ### Key Entities
 
@@ -118,5 +129,5 @@ A user wants to share a link to a specific file within a multi-file Gist. The UR
 - The Fetch and Display Public Gist feature (Task 3) is complete and provides multi-file Gist data
 - The Fetch and Display Gist Comments feature (Task 7) is complete and provides comment data
 - Comment anchor metadata will be extended to include filename
-- The file parameter in the URL uses a URL-safe encoding for filenames
+- The URL uses `file` parameter for file selection (e.g., `?gist=abc&file=readme.md`) with URL-safe encoding
 - Gist files are ordered alphabetically by filename (matching GitHub's behavior)

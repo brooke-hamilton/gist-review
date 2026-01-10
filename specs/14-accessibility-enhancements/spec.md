@@ -5,6 +5,15 @@
 **Status**: Draft  
 **Input**: User description: "Ensure full keyboard navigation for all UI elements: comment sidebar, revision selector, file selector, and text highlights. Add appropriate ARIA labels and support screen reader announcements for dynamic content."
 
+## Clarifications
+
+### Session 2026-01-10
+
+- Q: What visual style should be used for focus indicators? → A: 2px solid outline with offset, using high-contrast color (e.g., blue #005fcc or system focus color).
+- Q: What keyboard shortcuts should be provided for common actions? → A: Minimal shortcuts: Escape to close, / to focus search (if present), ? to show keyboard help.
+- Q: How should skip links be implemented for screen reader users? → A: Include "Skip to content" link visible on focus at top of page.
+- Q: What ARIA live region politeness level should be used for dynamic updates? → A: `polite` for most updates, `assertive` only for errors.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Navigate Application with Keyboard Only (Priority: P1)
@@ -63,7 +72,7 @@ A keyboard user needs to see which element currently has focus. All focusable el
 - What happens when content updates while focus is elsewhere?
   - Use ARIA live regions to announce changes without moving focus.
 - What happens when a dropdown has many options?
-  - Support type-ahead search or efficient keyboard navigation.
+  - Support arrow key navigation; type-ahead search is optional enhancement.
 - What happens with comment highlights that overlap?
   - Each highlight should be separately focusable and announced.
 
@@ -73,16 +82,18 @@ A keyboard user needs to see which element currently has focus. All focusable el
 
 - **FR-001**: System MUST allow keyboard navigation to all interactive elements
 - **FR-002**: System MUST follow a logical focus order (left-to-right, top-to-bottom)
-- **FR-003**: System MUST provide visible focus indicators for all focusable elements
+- **FR-003**: System MUST provide visible focus indicators (2px solid outline with offset, high-contrast color) for all focusable elements
 - **FR-004**: System MUST support keyboard activation (Enter/Space) for all interactive elements
 - **FR-005**: System MUST include ARIA labels for non-text interactive elements
 - **FR-006**: System MUST include ARIA roles for custom UI components (dropdowns, etc.)
-- **FR-007**: System MUST use ARIA live regions to announce dynamic content changes
+- **FR-007**: System MUST use ARIA live regions with `polite` for content updates and `assertive` for errors
 - **FR-008**: System MUST trap focus within modals/popovers when open
 - **FR-009**: System MUST allow Escape key to close modals/popovers
 - **FR-010**: System MUST support screen reader navigation in the comment sidebar
 - **FR-011**: System MUST support keyboard navigation for text highlights in content
 - **FR-012**: System MUST ensure focus indicators have sufficient color contrast
+- **FR-013**: System MUST provide a "Skip to content" link visible on focus at top of page
+- **FR-014**: System MUST support keyboard shortcuts: Escape to close modals, / to focus search, ? to show keyboard help
 
 ### Key Entities
 
