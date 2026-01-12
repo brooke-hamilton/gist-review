@@ -111,7 +111,7 @@ client_id={CLIENT_ID}&device_code={DEVICE_CODE}&grant_type=urn:ietf:params:oauth
 
 ```json
 {
-  "access_token": "gho_16C7e42F292c6912E7710c838347Ae178B4a",
+  "access_token": "gho_123456789abcdef123456789abcdef123456",
   "token_type": "bearer",
   "scope": "gist"
 }
